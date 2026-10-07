@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>معرض الصور</title>
+<title>مشروع</title>
 
 <style>
 * {
@@ -16,8 +16,24 @@ body {
   font-family: Arial, sans-serif;
   background: #eef1f5;
   color: #222;
+  position: relative;
+  min-height: 100vh;
 }
 
+/* خلفية شفافة لصورة سوريا */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url('رابط_صورة_سوريا'); /* <-- ضع الرابط هنا */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.12;               /* درجة الشفافية */
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* العنوان */
 header {
   background: #17324d;
   color: white;
@@ -29,6 +45,7 @@ header h1 {
   margin: 0;
 }
 
+/* التبويبات */
 nav {
   background: white;
   padding: 12px;
@@ -59,11 +76,13 @@ nav button.active {
   color: white;
 }
 
+/* الأقسام */
 section {
   display: none;
   max-width: 1200px;
   margin: auto;
   padding: 30px 20px;
+  position: relative;
 }
 
 section.active {
@@ -74,6 +93,7 @@ section h2 {
   margin-top: 0;
 }
 
+/* معرض الصور */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -94,47 +114,38 @@ section h2 {
   transform: scale(1.03);
 }
 
+/* البث */
 .live {
   background: white;
-  padding: 20px;
+  padding: 60px 20px;
   text-align: center;
   border-radius: 15px;
-  box-shadow: 0 2px 10px #0001;
 }
 
-.live iframe,
-.live .placeholder {
-  width: 100%;
-  max-width: 800px;
-  aspect-ratio: 16 / 9;
-  border: 0;
-  border-radius: 12px;
-  display: block;
-  margin: 0 auto;
+.live .dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e02424;
+  margin-inline-end: 8px;
+  animation: pulse 1.2s infinite;
 }
 
-.live .placeholder {
-  background: #17324d;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  padding: 20px;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .3; }
 }
 
+/* تكبير الصورة */
 #viewer {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.9);
+  background: rgba(0, 0, 0, .9);
   z-index: 100;
   align-items: center;
   justify-content: center;
-}
-
-#viewer.open {
-  display: flex;
 }
 
 #viewer img {
@@ -154,6 +165,7 @@ section h2 {
   user-select: none;
 }
 
+/* الموبايل */
 @media (max-width: 600px) {
 
   nav {
@@ -168,15 +180,10 @@ section h2 {
 
   .gallery {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
   }
 
   .gallery img {
     height: 160px;
-  }
-
-  section {
-    padding: 20px 12px;
   }
 }
 </style>
@@ -184,144 +191,184 @@ section h2 {
 
 <body>
 
+<!-- خلفية سوريا الشفافة -->
+<div class="bg-overlay"></div>
+
 <header>
-  <h1>معرض الصور</h1>
+  <h1>مشروع</h1>
 </header>
 
 <nav>
   <button class="active" onclick="showTab('home', this)">الرئيسية</button>
-  <button onclick="showTab('nature', this)">FPV</button>
-  <button onclick="showTab('wallpapers', this)">dji</button>
-  <button onclick="showTab('cities', this)">موسكيتو</button>
-  <button onclick="showTab('sunrise', this)">سومرو</button>
-  <button onclick="showTab('night', this)">كالكان</button>
+  <button onclick="showTab('nature', this)">صور طبيعة</button>
+  <button onclick="showTab('wallpapers', this)">صور خلفيات</button>
+  <button onclick="showTab('cities', this)">صور مدن</button>
+  <button onclick="showTab('sunrise', this)">غروب وشروق</button>
+  <button onclick="showTab('night', this)">صور ليلية</button>
   <button onclick="showTab('misc', this)">صور متنوعة</button>
+  <button onclick="showTab('dji', this)">dji</button>
   <button onclick="showTab('live', this)">البث المباشر</button>
 </nav>
 
+<!-- الرئيسية -->
 <section id="home" class="active">
   <h2>أهلاً وسهلاً 👋</h2>
   <p>مرحباً بك في موقعي الخاص بالصور والبث المباشر.</p>
-  <p>استخدم الأزرار في الأعلى للتنقل بين الأقسام، واضغط على أي صورة لتكبيرها.</p>
+  <p>استخدم التبويبات في الأعلى للتنقل بين الأقسام، واضغط على أي صورة لتكبيرها.</p>
 </section>
 
+<!-- طبيعة -->
 <section id="nature">
-  <h2>FPV</h2>
+  <h2>🌳 صور الطبيعة</h2>
   <div class="gallery">
-    <img src="https://picsum.photos/600/400?random=1" alt="FPV 1" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=2" alt="FPV 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=3" alt="FPV 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=4" alt="FPV 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=1" alt="صورة طبيعة 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=2" alt="صورة طبيعة 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=3" alt="صورة طبيعة 3">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=4" alt="صورة طبيعة 4">
   </div>
 </section>
 
+<!-- خلفيات -->
 <section id="wallpapers">
-  <h2>dji</h2>
+  <h2>🖼️ صور الخلفيات</h2>
   <div class="gallery">
-    <img src="https://pin.it/5s3CpbD3f=5" alt="dji 1" loading="lazy">
-    <img src="https://www-cdn.djiits.com/cms/uploads/d329577cc39caaa80410aca69027385e@640*640.png=6" alt="dji 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=7" alt="dji 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=8" alt="dji 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=5" alt="خلفية 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=6" alt="خلفية 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=7" alt="خلفية 3">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=8" alt="خلفية 4">
   </div>
 </section>
 
+<!-- مدن -->
 <section id="cities">
-  <h2>موسكيتو</h2>
+  <h2>🏙️ صور المدن</h2>
   <div class="gallery">
-    <img src="https://picsum.photos/600/400?random=9" alt="موسكيتو 1" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=10" alt="موسكيتو 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=11" alt="موسكيتو 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=12" alt="موسكيتو 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=9" alt="مدينة 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=10" alt="مدينة 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=11" alt="مدينة 3">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=12" alt="مدينة 4">
   </div>
 </section>
 
+<!-- غروب وشروق -->
 <section id="sunrise">
-  <h2>سومرو</h2>
+  <h2>🌅 غروب وشروق</h2>
   <div class="gallery">
-    <img src="https://picsum.photos/600/400?random=13" alt="سومرو 1" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=14" alt="سومرو 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=15" alt="سومرو 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=16" alt="سومرو 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=13" alt="غروب 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=14" alt="غروب 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=15" alt="شروق 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=16" alt="شروق 2">
   </div>
 </section>
 
+<!-- ليلية -->
 <section id="night">
-  <h2>كالكان</h2>
+  <h2>🌙 صور ليلية</h2>
   <div class="gallery">
-    <img src="https://picsum.photos/600/400?random=17" alt="كالكان 1" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=18" alt="كالكان 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=19" alt="كالكان 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=20" alt="كالكان 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=17" alt="صورة ليلية 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=18" alt="صورة ليلية 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=19" alt="صورة ليلية 3">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=20" alt="صورة ليلية 4">
   </div>
 </section>
 
+<!-- متنوعة -->
 <section id="misc">
   <h2>📷 صور متنوعة</h2>
   <div class="gallery">
-    <img src="https://picsum.photos/600/400?random=21" alt="متنوعة 1" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=22" alt="متنوعة 2" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=23" alt="متنوعة 3" loading="lazy">
-    <img src="https://picsum.photos/600/400?random=24" alt="متنوعة 4" loading="lazy">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=21" alt="صورة متنوعة 1">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=22" alt="صورة متنوعة 2">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=23" alt="صورة متنوعة 3">
+    <img loading="lazy" src="https://picsum.photos/600/400?random=24" alt="صورة متنوعة 4">
   </div>
 </section>
 
+<!-- قسم dji -->
+<section id="dji">
+  <h2>dji</h2>
+  <div class="gallery">
+    <img loading="lazy"
+         src="https://www-cdn.djiits.com/cms/uploads/d329577cc39caaa80410aca69027385e@640*640.png"
+         alt="dji">
+  </div>
+</section>
+
+<!-- البث المباشر -->
 <section id="live">
-  <h2>📺 البث المباشر</h2>
+  <h2>🔴 البث المباشر</h2>
   <div class="live">
-    <div class="placeholder">ضع هنا رابط البث المباشر (iframe)</div>
+    <p><span class="dot"></span><strong>البث المباشر</strong></p>
+    <p>سيتم عرض البث هنا عند توفره.</p>
+
+    <!--
+      لتفعيل البث: احذف التعليق وضع رابط الفيديو الخاص بك
+      (يوتيوب، فيميو، أو أي مشغّل آخر)
+
+      <iframe width="100%" height="500" style="border-radius:12px;border:0"
+        src="https://www.youtube.com/embed/VIDEO_ID"
+        allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
+    -->
   </div>
 </section>
 
+<!-- عارض الصور -->
 <div id="viewer">
   <span id="close">&times;</span>
-  <img id="viewerImg" src="" alt="">
+  <img id="viewerImg" src="" alt="صورة مكبرة">
 </div>
 
 <script>
-function showTab(id, btn) {
-  document.querySelectorAll('section').forEach(function (s) {
-    s.classList.remove('active');
+  /* التنقل بين التبويبات */
+  function showTab(id, btn) {
+    document.querySelectorAll('section').forEach(function (sec) {
+      sec.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('nav button').forEach(function (b) {
+      b.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* عارض الصور */
+  const viewer     = document.getElementById('viewer');
+  const viewerImg  = document.getElementById('viewerImg');
+
+  function openViewer(src) {
+    viewerImg.src = src;
+    viewer.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeViewer() {
+    viewer.style.display = 'none';
+    viewerImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery img').forEach(function (img) {
+    img.addEventListener('click', function () {
+      openViewer(img.src);
+    });
   });
 
-  document.getElementById(id).classList.add('active');
+  document.getElementById('close').addEventListener('click', closeViewer);
 
-  document.querySelectorAll('nav button').forEach(function (b) {
-    b.classList.remove('active');
+  /* إغلاق عند الضغط على الخلفية */
+  viewer.addEventListener('click', function (e) {
+    if (e.target === viewer) closeViewer();
   });
 
-  btn.classList.add('active');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-var viewer = document.getElementById('viewer');
-var viewerImg = document.getElementById('viewerImg');
-
-function openViewer(src) {
-  viewerImg.src = src;
-  viewer.classList.add('open');
-}
-
-function closeViewer() {
-  viewer.classList.remove('open');
-  viewerImg.src = '';
-}
-
-document.querySelectorAll('.gallery img').forEach(function (img) {
-  img.addEventListener('click', function () {
-    openViewer(img.src);
+  /* إغلاق بزر Escape */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeViewer();
   });
-});
-
-document.getElementById('close').addEventListener('click', closeViewer);
-
-viewer.addEventListener('click', function (e) {
-  if (e.target === viewer) closeViewer();
-});
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') closeViewer();
-});
 </script>
 
 </body>
